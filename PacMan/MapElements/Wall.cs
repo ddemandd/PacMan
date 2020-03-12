@@ -6,5 +6,10 @@ namespace PacMan
 {
     class Wall : Cell
     {
+        public Wall(Coord coord)
+        {
+            _coord = coord;
+            _viewCell = (char)ViewCell.Wall;
+        }
     }
 }

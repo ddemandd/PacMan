@@ -6,10 +6,10 @@ namespace PacMan
 {
     enum ViewCell
     {
-        Wall,
-        Food,
-        Cherry,
-        Pacman,
-        Enemy
+        Wall = 'w',
+        Food = 'f',
+        Cherry = 'c',
+        Pacman = 'p',
+        Enemy = 'e'
     }
 }
