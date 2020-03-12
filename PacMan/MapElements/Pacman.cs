@@ -4,16 +4,17 @@ using System.Text;
 
 namespace PacMan
 {
-    class Enemy
+    class Pacman : Cell
     {
-        ConsoleColor _enemyColor;
-        Direction _direction;
+        int _lifes;
+        int _score;
         int _speed;
+        ConsoleColor _pacmanColor;
+        Direction _direction;
 
         public void Move()
         { 
         
         }
-
     }
 }

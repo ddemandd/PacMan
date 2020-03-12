@@ -4,8 +4,12 @@ using System.Text;
 
 namespace PacMan
 {
-    class Food
+    enum ViewCell
     {
-        int _price;
+        Wall,
+        Food,
+        Cherry,
+        Pacman,
+        Enemy
     }
 }

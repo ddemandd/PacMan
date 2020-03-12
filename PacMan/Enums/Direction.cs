@@ -4,11 +4,11 @@ using System.Text;
 
 namespace PacMan
 {
-    class Cell
+    enum Direction
     {
-        Coord _coord;
-        GameField _owner;
-        char _viewCell;
-
+        Up,
+        Down,
+        Left,
+        Right
     }
 }

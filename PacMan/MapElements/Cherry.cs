@@ -4,8 +4,7 @@ using System.Text;
 
 namespace PacMan
 {
-    enum Direction
+    class Cherry : Food
     {
-
     }
 }

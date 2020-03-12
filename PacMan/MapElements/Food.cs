@@ -4,7 +4,8 @@ using System.Text;
 
 namespace PacMan
 {
-    class Cherry
+    class Food : Cell
     {
+        int _price;
     }
 }
