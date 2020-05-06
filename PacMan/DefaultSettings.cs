@@ -27,5 +27,7 @@ namespace PacMan
 
         public const int SCORE_POSITION_Y = 2;
         public const int SCORE_POSITION_X = MAP_WIDTH + 10;
+
+        public const int MAP_SIZE = MAP_HEIGHT * MAP_WIDTH;
     }
 }

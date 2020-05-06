@@ -11,28 +11,47 @@ namespace PacMan
             Console.CursorVisible = false;
         }
 
-        public void PrintField(Cell[,] source)
+        public void PrintField(Dictionary<Coord, Cell> source)
         {
-            for (int i = 0; i < source.GetLength(0); i++)
+            foreach (Coord item in source.Keys)
             {
-                for (int j = 0; j < source.GetLength(1); j++)
-                {
-                    if (source[i, j] != null)
-                    {
-                        Console.ForegroundColor = source[i, j].Color;
+                Cell tmp = source[item];
 
-                        Console.Write(source[i, j].View);
-                        //ShowCell(source[i, j]);
-                    }
-                    else
-                    {
-                        Console.Write(" ");
-                    }
+                if (tmp != null)
+                {
+                    ShowCell(tmp);
                 }
-                Console.WriteLine();
+                else
+                {
+                    PrintEmptyCell(item);
+                }
             }
 
-            Console.ForegroundColor = ConsoleColor.Gray;
+
+            //Cell tmp;
+
+            //for (int i = 0; i < DefaultSettings.MAP_HEIGHT; i++)
+            //{
+            //    for (int j = 0; j < DefaultSettings.MAP_WIDTH; j++)
+            //    {
+            //        tmp = source[new Coord(j, i)];
+
+            //        if (tmp != null)
+            //        {
+            //            Console.ForegroundColor = tmp.Color;
+
+            //            Console.Write(tmp.View);
+            //            //ShowCell(source[i, j]);
+            //        }
+            //        else
+            //        {
+            //            Console.Write(" ");
+            //        }
+            //    }
+            //    Console.WriteLine();
+            //}
+
+            //Console.ForegroundColor = ConsoleColor.Gray;
         }
 
         public void ShowCell(Cell someCell)
@@ -50,11 +69,16 @@ namespace PacMan
 
         public void HideCell(Cell someCell)
         {
-            Console.SetCursorPosition(someCell.Coord.X, someCell.Coord.Y); 
+            PrintEmptyCell(someCell.Coord);
+        }
+
+        private void PrintEmptyCell(Coord point)
+        {
+            Console.SetCursorPosition(point.X, point.Y);
 
             Console.Write(" ");
 
-            Console.SetCursorPosition(someCell.Coord.X, someCell.Coord.Y);
+            Console.SetCursorPosition(point.X, point.Y);
         }
 
         public void PrintScore(int score)

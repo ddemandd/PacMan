@@ -10,7 +10,7 @@ namespace PacMan
     {
         #region Fields
 
-        private Cell[,] _map;
+        private Dictionary<Coord, Cell> _map;
         private Enemy[] _enemys;
         private Pacman _pacman;
         private int _score;
@@ -80,7 +80,7 @@ namespace PacMan
 
         public GameField()
         {
-            _map = new Cell[DefaultSettings.MAP_HEIGHT, DefaultSettings.MAP_WIDTH];
+            _map = new Dictionary<Coord, Cell>(DefaultSettings.MAP_SIZE); //Cell[DefaultSettings.MAP_HEIGHT, DefaultSettings.MAP_WIDTH];
             _enemys = new Enemy[DefaultSettings.ENEMY_COUNT];
             _pacman = new Pacman(this, new Coord());
             _score = 0;
@@ -91,11 +91,6 @@ namespace PacMan
 
         #region Properties
 
-        public Cell[,] Map
-        {
-            get { return (Cell[,])_map.Clone(); }
-            private set { _map = value; }
-        }
 
         public Pacman Pacman
         {
@@ -121,22 +116,24 @@ namespace PacMan
 
         public void InitiolyzeFoodWall()
         {
-            for (int i = 0; i < _map.GetLength(0); i++)
+            for (int i = 0; i < DefaultSettings.MAP_HEIGHT; i++)
             {
-                for (int j = 0; j < _map.GetLength(1); j++)
+                for (int j = 0; j < DefaultSettings.MAP_WIDTH; j++)
                 {
-                    if (i == 0 || j == 0 || i == _map.GetLength(0) - 1 || j == _map.GetLength(1) - 1)
+                    Coord currentCoord = new Coord(j, i);
+
+                    if (i == 0 || j == 0 || i == DefaultSettings.MAP_HEIGHT - 1 || j == DefaultSettings.MAP_WIDTH - 1 || (i % 2 == 0 && j % 5 != 1))
                     {
-                        _map[i, j] = new Wall(new Coord(j, i));
+                        _map.Add(currentCoord, new Wall(currentCoord));
                     }
-                    if (i % 2 == 0 && j % 5 != 1)
+                    else if(i != 0 && i != DefaultSettings.MAP_HEIGHT - 1 && j != 0 && j != DefaultSettings.MAP_WIDTH - 1 && i % 2 == 1 && j % 5 != 1)
                     {
-                        _map[i, j] = new Wall(new Coord(j, i));
-                    }
-                    else if(i != 0 && i != _map.GetLength(0) - 1 && j != 0 && j != _map.GetLength(1) - 1 && i % 2 == 1 && j % 5 != 1)
-                    {
-                        _map[i, j] = new Food(new Coord(j, i));
+                        _map.Add(currentCoord, new Food(currentCoord));
                         _countFood++;
+                    }
+                    else
+                    {
+                        _map.Add(currentCoord, null);
                     }
                 }
             }
@@ -148,14 +145,14 @@ namespace PacMan
         {
             bool result = false;
 
+            Cell tmp;
             Coord nextPosition = GetNextCoord(currentPosition, someDirection);
+            
+            _map.TryGetValue(nextPosition, out tmp);
 
-            if (nextPosition.Y < DefaultSettings.MAP_HEIGHT - 1 && nextPosition.X < DefaultSettings.MAP_WIDTH - 1 && nextPosition.X > 0 && nextPosition.Y > 0)
-            {
-                if (!(_map[nextPosition.Y, nextPosition.X] is Wall))
+            if (!(tmp is Wall)) // ToDo: remove "is"
                 {
-                    result = true;
-                }
+                result = true;
             }
 
             return result;
@@ -196,7 +193,7 @@ namespace PacMan
 
         private bool IsCellNullOrEmpty(Coord point)
         {
-            return (_map[point.Y, point.X] == null);
+            return (_map[point] == null);
         }
 
         public Direction[] GetFreeDirection(Coord position)
@@ -210,17 +207,17 @@ namespace PacMan
 
         private bool IsCellCherry(Coord point)
         {
-            return (_map[point.Y, point.X] is Cherry);
+            return (_map[point] is Cherry);
         }
 
         private bool IsCellFood(Coord point)
         {
-            return (_map[point.Y, point.X] is Food);
+            return (_map[point] is Food);
         }
 
         private void ClearCell(Coord point)
         {
-            _map[point.Y, point.X] = null;
+            _map[point] = null;
         }
 
         public void TryEatFood(Coord point)
@@ -351,14 +348,17 @@ namespace PacMan
 
                 for (int i = 0; i < _enemys.Length; i++)
                 {
+                    Coord point = _enemys[i].Coord;
 
-                    if (_map[_enemys[i].Coord.Y, _enemys[i].Coord.X] == null)
+                    bool tmp = _map.ContainsKey(point);
+
+                      if (_map[_enemys[i].Coord] == null)
                     {
                         _hideCell(_enemys[i]);
                     }
                     else
                     {
-                        _printCell(_map[_enemys[i].Coord.Y, _enemys[i].Coord.X]);
+                        _printCell(_map[_enemys[i].Coord]);
                     }
                 }
 
