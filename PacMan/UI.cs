@@ -50,7 +50,7 @@ namespace PacMan
 
         public void HideCell(Cell someCell)
         {
-            Console.SetCursorPosition(someCell.Coord.X, someCell.Coord.Y);
+            Console.SetCursorPosition(someCell.Coord.X, someCell.Coord.Y); 
 
             Console.Write(" ");
 
