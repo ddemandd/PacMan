@@ -7,7 +7,7 @@ namespace PacMan
     abstract class Cell
     {
         protected Coord _coord;
-        protected GameField _owner;
+        protected IOwner _owner;
         protected char _viewCell;
         protected ConsoleColor _color;
 
@@ -19,12 +19,12 @@ namespace PacMan
         public Coord Coord
         {
             get { return _coord; }
+            set { _coord = value; }
         }
 
         public ConsoleColor Color
         {
             get { return _color; }
         }
-
     }
 }

@@ -16,8 +16,6 @@ namespace PacMan
 
             start.Run();
 
-
-
             Console.ReadKey();
         }
     }

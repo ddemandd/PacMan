@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace PacMan
 {
-    class GameField
+    class GameField : IOwner
     {
         #region Fields
 
@@ -89,16 +89,6 @@ namespace PacMan
 
         #endregion
 
-        #region Properties
-
-
-        public Pacman Pacman
-        {
-            get { return _pacman; }
-        }
-
-        #endregion
-
         #region Initiolyze
 
         private void InitiolyzeEnemys()
@@ -114,7 +104,7 @@ namespace PacMan
             _pacman = new Pacman(this, new Coord(DefaultSettings.PACMAN_START_POS_X, DefaultSettings.PACMAN_START_POS_Y));
         }
 
-        public void InitiolyzeFoodWall()
+        private void InitiolyzeFoodWall()
         {
             for (int i = 0; i < DefaultSettings.MAP_HEIGHT; i++)
             {
@@ -141,12 +131,51 @@ namespace PacMan
 
         #endregion
 
-        public bool CanMoving(Coord currentPosition, Direction someDirection)
+        #region PrivateMethods
+
+        private bool IsCellNullOrEmpty(Coord point)
+        {
+            return (_map[point] == null);
+        }
+
+        private bool IsCellCherry(Coord point)
+        {
+            return (_map[point] is Cherry);
+        }
+
+        private bool IsCellFood(Coord point)
+        {
+            return (_map[point] is Food);
+        }
+
+        private void ClearCell(Coord point)
+        {
+            _map[point] = null;
+        }
+
+        private bool CanPlay()
+        {
+            bool result = false;
+
+            if (_pacman.Lifes > 0)
+            {
+                if (_countFood > 0)
+                {
+                    result = true;
+                }
+            }
+
+            return result;
+        }
+
+        #endregion
+
+        bool IOwner.CanMoving(Coord currentPosition, Direction someDirection)
         {
             bool result = false;
 
             Cell tmp;
-            Coord nextPosition = GetNextCoord(currentPosition, someDirection);
+            Coord nextPosition = ((IOwner)this).GetNextCoord(currentPosition, someDirection);
             
             _map.TryGetValue(nextPosition, out tmp);
 
@@ -158,7 +187,7 @@ namespace PacMan
             return result;
         }
 
-        public Coord GetNextCoord(Coord currentPos, Direction direct)
+        Coord IOwner.GetNextCoord(Coord currentPos, Direction direct)
         {
             Coord point = new Coord(currentPos.X, currentPos.Y);
 
@@ -191,36 +220,7 @@ namespace PacMan
             return point;
         }
 
-        private bool IsCellNullOrEmpty(Coord point)
-        {
-            return (_map[point] == null);
-        }
-
-        public Direction[] GetFreeDirection(Coord position)
-        {
-            Direction[] directions = new Direction[3];
-
-           
-
-            return directions;
-        }
-
-        private bool IsCellCherry(Coord point)
-        {
-            return (_map[point] is Cherry);
-        }
-
-        private bool IsCellFood(Coord point)
-        {
-            return (_map[point] is Food);
-        }
-
-        private void ClearCell(Coord point)
-        {
-            _map[point] = null;
-        }
-
-        public void TryEatFood(Coord point)
+        void IOwner.TryEatFood(Coord point)
         {
             if (!IsCellNullOrEmpty(point))
             {
@@ -246,7 +246,7 @@ namespace PacMan
             }
         }
 
-        public bool CheckEnemys(Coord point)
+        bool IOwner.CheckEnemys(Coord point)
         {
             bool result = false;
 
@@ -262,7 +262,7 @@ namespace PacMan
             return result;
         }
 
-        public bool CheckPacman(Coord point)
+        bool IOwner.CheckPacman(Coord point)
         {
             bool result = false;
 
@@ -274,13 +274,13 @@ namespace PacMan
             return result;
         }
 
-        public void PutPacmanToStartPosition()
+        void IOwner.PutPacmanToStartPosition()
         {
             _pacman.Coord = new Coord(DefaultSettings.PACMAN_START_POS_X, DefaultSettings.PACMAN_START_POS_Y);
             _pacman.Lifes--;
         }
 
-        public void PutEnemyToStartPosition(Coord enemyPosition = null)
+        void IOwner.PutEnemyToStartPosition(Coord enemyPosition = null)
         {
             for (int i = 0; i < _enemys.Length; i++)
             {
@@ -298,22 +298,7 @@ namespace PacMan
             }
         }
 
-        public bool CanPlay()
-        {
-            bool result = false;
-
-            if (_pacman.Lifes > 0)
-            {
-                if (_countFood > 0)
-                {
-                    result = true;
-                }
-            }
-
-            return result;
-        }
-
-        public bool IsPacmanAngry()
+        bool IOwner.IsPacmanAngry()
         {
             bool result = false;
 

@@ -6,8 +6,6 @@ namespace PacMan
 {
     class Food : Cell
     {
-        protected int _price;
-
         public Food(Coord coord)
         {
             _coord = coord;

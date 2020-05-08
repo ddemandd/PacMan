@@ -26,32 +26,6 @@ namespace PacMan
                     PrintEmptyCell(item);
                 }
             }
-
-
-            //Cell tmp;
-
-            //for (int i = 0; i < DefaultSettings.MAP_HEIGHT; i++)
-            //{
-            //    for (int j = 0; j < DefaultSettings.MAP_WIDTH; j++)
-            //    {
-            //        tmp = source[new Coord(j, i)];
-
-            //        if (tmp != null)
-            //        {
-            //            Console.ForegroundColor = tmp.Color;
-
-            //            Console.Write(tmp.View);
-            //            //ShowCell(source[i, j]);
-            //        }
-            //        else
-            //        {
-            //            Console.Write(" ");
-            //        }
-            //    }
-            //    Console.WriteLine();
-            //}
-
-            //Console.ForegroundColor = ConsoleColor.Gray;
         }
 
         public void ShowCell(Cell someCell)
@@ -88,7 +62,5 @@ namespace PacMan
             Console.Write("SCORE: {0}", score);
             Console.ForegroundColor = ConsoleColor.Gray;
         }
-
-        
     }
 }

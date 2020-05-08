@@ -6,26 +6,15 @@ namespace PacMan
 {
     class Coord
     {
-        int _x;
-        int _y;
-
         public Coord(int x = 0, int y = 0)
         {
-            _x = x;
-            _y = y;
+            X = x;
+            Y = y;
         }
 
-        public int X
-        {
-            get { return _x; }
-            set { _x = value; }
-        }
+        public int X { get; set; }
 
-        public int Y
-        {
-            get { return _y; }
-            set { _y = value; }
-        }
+        public int Y { get; set; }
 
         public override bool Equals(object obj)
         {
@@ -55,7 +44,7 @@ namespace PacMan
 
         public override int GetHashCode()
         {
-            return Tuple.Create(_x, _y).GetHashCode();
+            return (X | (Y << 4));
         }
     }
 }

@@ -8,48 +8,33 @@ namespace PacMan
     {
         private Direction _nextDirection;
         private Direction _direction;
-        private int _lifes;
-        private int _speed;
 
         public Pacman(GameField owner, Coord coord)
         {
             _color = ConsoleColor.Yellow;
             _direction = Direction.Left;
-            _nextDirection = Direction.Default;
-            _lifes = DefaultSettings.PACMAN_LIFES;
+            _nextDirection = Direction.NonDirection;
+            Lifes = DefaultSettings.PACMAN_LIFES;
             _owner = owner;
             _coord = coord;
             _viewCell = (char)ViewCell.Pacman;
-            _speed = DefaultSettings.SPEED;
+            Speed = DefaultSettings.SPEED;
         }
 
         public bool Angry { get; set; } = false;
 
-        public int Speed
-        {
-            get { return _speed; }
-            set { _speed = value; }
-        }
+        public int Speed { get; set; }
 
-        public int Lifes
-        {
-            get { return _lifes; }
-            set { _lifes = value; }
-        }
+        public int Lifes { get; set; }
 
-        public Coord Coord
-        {
-            get { return _coord; }
-            set { _coord = value; }
-        }
         private void MoveNextPoint(Direction reverseDirection)
         {
-            if (_nextDirection != Direction.Default)
+            if (_nextDirection != Direction.NonDirection)
             {
                 if (_owner.CanMoving(_coord, _nextDirection))
                 {
                     _direction = _nextDirection;
-                    _nextDirection = Direction.Default;
+                    _nextDirection = Direction.NonDirection;
                     _coord = _owner.GetNextCoord(_coord, _direction);
                     return;
                 }
@@ -108,17 +93,15 @@ namespace PacMan
                 {
                     _owner.PutEnemyToStartPosition();
                     _coord = new Coord(DefaultSettings.PACMAN_START_POS_X, DefaultSettings.PACMAN_START_POS_Y);
-                    _lifes--;
+                    Lifes--;
                 }
             }
             _owner.TryEatFood(_coord);
         }
 
-        
-
         public void CheckChangeDirection()
         {
-            Direction tmp = Direction.Default;
+            Direction tmp = Direction.NonDirection;
 
             if (Console.KeyAvailable) //проверка нажата ли кнопка пользователем
             {
@@ -149,7 +132,7 @@ namespace PacMan
                 }
             }
 
-            if (tmp != Direction.Default)
+            if (tmp != Direction.NonDirection)
             {
                 if (_owner.CanMoving(_coord, tmp))
                 {

@@ -8,31 +8,20 @@ namespace PacMan
     {
         private Direction _direction;
         private Direction _nextDirection;
-        private int _speed;
 
-        public Enemy(ConsoleColor color, Coord coord, GameField owner)
+        public Enemy(ConsoleColor color, Coord coord, IOwner owner)
         {
             _direction = Direction.Up;
             _color = color;
             _viewCell = (char)ViewCell.Enemy;
             _coord = coord;
             _owner = owner;
-            _speed = DefaultSettings.SPEED;
+            Speed = DefaultSettings.SPEED;
         }
 
         public bool Angry { get; set; } = true;
 
-        public int Speed
-        {
-            get { return _speed; }
-            set { _speed = value; }
-        }
-
-        public Coord Coord
-        {
-            get { return _coord; }
-            set { _coord = value; }
-        }
+        public int Speed { get; set; }
 
         private Direction GetRandomDirection()
         {
@@ -41,7 +30,6 @@ namespace PacMan
             int numb = tmp.Next(0, 1000) % 4 + 1;
 
             return (Direction)numb;
-
         }
 
         public void Move()
@@ -86,8 +74,6 @@ namespace PacMan
                     _owner.PutPacmanToStartPosition();
                 }
             }
-
-
         }
 
         private void MovingEnemy(Direction reverse)
