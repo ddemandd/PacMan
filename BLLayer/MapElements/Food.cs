@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace PacMan
+using BLLayer.Enums;
+
+namespace BLLayer.MapElements
 {
     class Food : Cell
     {

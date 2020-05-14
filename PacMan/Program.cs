@@ -1,5 +1,8 @@
 ﻿using System;
 
+using BLLayer;
+using BLLayer.Delegates;
+
 namespace PacMan
 {
     class Program
@@ -13,6 +16,10 @@ namespace PacMan
             start.ShowCell += print.ShowCell;
             start.HideCell += print.HideCell;
             start.ShowScore += print.PrintScore;
+            start.PrintWin += print.PrintWin;
+            start.PrintLose += print.PrintLose;
+            start.KeyAvalible += print.IsKeyAvalible;
+            start.UserDirection += print.GetDirection;
 
             start.Run();
 

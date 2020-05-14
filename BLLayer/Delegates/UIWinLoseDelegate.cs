@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace PacMan.Delegates
+namespace BLLayer.Delegates
 {
-     delegate void UIScoreDelegate(int score);
+    public delegate void UIWinLoseDelegate();
 }

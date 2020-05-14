@@ -1,12 +1,17 @@
-﻿using PacMan.Delegates;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 
-namespace PacMan
+using BLLayer.Interfaces;
+using BLLayer.MapElements;
+using BLLayer.Enums;
+using BLLayer.Delegates;
+
+namespace BLLayer
 {
-    class GameField : IOwner
+    public class GameField : IOwner
     {
         #region Fields
 
@@ -16,6 +21,10 @@ namespace PacMan
         private int _score;
         private int _countFood;
 
+        private UIGetUserDirectionDelegate _userDirection;
+        private UIIsKeyAvalibleDelegate _keyAvalible;
+        private UIWinLoseDelegate _printWin;
+        private UIWinLoseDelegate _printLose;
         private UICellDelegate _printCell;
         private UICellDelegate _hideCell;
         private UIGameFieldDelegate _printGameField;
@@ -24,6 +33,55 @@ namespace PacMan
         #endregion
 
         #region Events
+
+
+        public event UIGetUserDirectionDelegate UserDirection
+        {
+            add
+            {
+                _userDirection += value;
+            }
+            remove
+            {
+                _userDirection -= value;
+            }
+        }
+
+        public event UIIsKeyAvalibleDelegate KeyAvalible
+        {
+            add
+            {
+                _keyAvalible += value;
+            }
+            remove
+            {
+                _keyAvalible -= value;
+            }
+        }
+
+        public event UIWinLoseDelegate PrintLose
+        {
+            add
+            {
+                _printLose += value;
+            }
+            remove
+            {
+                _printLose -= value;
+            }
+        }
+
+        public event UIWinLoseDelegate PrintWin
+        {
+            add
+            {
+                _printWin += value;
+            }
+            remove
+            {
+                _printWin -= value;
+            }
+        }
 
         public event UICellDelegate ShowCell
         {
@@ -352,7 +410,13 @@ namespace PacMan
                     _enemys[i].Move();
                 }
 
-                _pacman.CheckChangeDirection(); //получаем направление
+
+                if (_keyAvalible())
+                {
+                    Direction keyDirection = _userDirection();
+                    _pacman.CheckChangeDirection(keyDirection); //получаем направление
+                }
+
                 _pacman.Move();
 
                 _printCell(_pacman);
@@ -366,11 +430,12 @@ namespace PacMan
 
             if (_countFood == 0) 
             {
-                Console.WriteLine("win");
+                //_printWin();
+                _printWin.Invoke();
             }
             else
             {
-                Console.WriteLine("gg");
+                _printLose();
             }
         }
     }

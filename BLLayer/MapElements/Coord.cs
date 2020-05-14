@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PacMan
+﻿
+namespace BLLayer
 {
-    class Coord
+    public class Coord
     {
         public Coord(int x = 0, int y = 0)
         {

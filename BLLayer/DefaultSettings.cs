@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PacMan
+﻿
+namespace BLLayer
 {
-    class DefaultSettings
+    public class DefaultSettings
     {
         public const int MAP_HEIGHT = 23;
         public const int MAP_WIDTH = 48;
@@ -27,6 +24,9 @@ namespace PacMan
 
         public const int SCORE_POSITION_Y = 2;
         public const int SCORE_POSITION_X = MAP_WIDTH + 10;
+
+        public const int RESULT_POSITION_Y = 5;
+        public const int RESULT_POSITION_X = MAP_WIDTH + 10;
 
         public const int MAP_SIZE = MAP_HEIGHT * MAP_WIDTH;
     }

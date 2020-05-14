@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace PacMan
+using BLLayer.Interfaces;
+
+namespace BLLayer.MapElements
 {
-    abstract class Cell
+    public abstract class Cell
     {
         protected Coord _coord;
         protected IOwner _owner;

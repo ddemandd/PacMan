@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace PacMan
+using BLLayer.Enums;
+
+namespace BLLayer.MapElements
 {
     class Pacman : Cell
     {
@@ -99,48 +99,19 @@ namespace PacMan
             _owner.TryEatFood(_coord);
         }
 
-        public void CheckChangeDirection()
+        public void CheckChangeDirection(Direction key)
         {
-            Direction tmp = Direction.NonDirection;
+            //Direction tmp = Direction.NonDirection;
 
-            if (Console.KeyAvailable) //проверка нажата ли кнопка пользователем
+            if (key != Direction.NonDirection)
             {
-                switch (Console.ReadKey().Key) //проверяем нажатаю кнопку на соответствие с имеющимся направлением и выбираем новое направление
+                if (_owner.CanMoving(_coord, key))
                 {
-                    case ConsoleKey.LeftArrow:
-                        {
-                            tmp = Direction.Left;
-                            break;
-                        }
-                    case ConsoleKey.UpArrow:
-                        {
-                            tmp = Direction.Up;
-                            break;
-                        }
-                    case ConsoleKey.RightArrow:
-                        {
-                            tmp = Direction.Right;
-                            break;
-                        }
-                    case ConsoleKey.DownArrow:
-                        {
-                            tmp = Direction.Down;
-                            break;
-                        }
-                    default:
-                        break;
-                }
-            }
-
-            if (tmp != Direction.NonDirection)
-            {
-                if (_owner.CanMoving(_coord, tmp))
-                {
-                    _direction = tmp;
+                    _direction = key;
                 }
                 else
                 {
-                    _nextDirection = tmp;
+                    _nextDirection = key;
                 }
             }
         }

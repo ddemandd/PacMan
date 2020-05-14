@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using BLLayer.Enums;
 
-namespace PacMan
+namespace BLLayer.Interfaces
 {
-    internal interface IOwner
+    public interface IOwner
     {
         public bool CanMoving(Coord currentCoord, Direction someDirection);
 

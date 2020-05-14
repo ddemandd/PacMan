@@ -1,8 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace PacMan
+using BLLayer.Enums;
+using BLLayer.Interfaces;
+
+namespace BLLayer.MapElements
 {
     class Enemy : Cell
     {
