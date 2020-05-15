@@ -9,7 +9,7 @@ namespace PacMan
     {
         static void Main(string[] args)
         {
-            GameField start = new GameField();
+            GameField start = GameField.GetInstance();
             UI print = new UI();
 
             start.ShowGameField += print.PrintField;

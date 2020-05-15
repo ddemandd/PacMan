@@ -13,6 +13,22 @@ namespace BLLayer
 {
     public class GameField : IOwner
     {
+        #region Singleton
+
+        private static GameField _field;
+
+        public static GameField GetInstance()
+        {
+            if (_field == null)
+            {
+                _field = new GameField();
+            }
+
+            return _field;
+        }
+
+        #endregion
+
         #region Fields
 
         private Dictionary<Coord, Cell> _map;
@@ -136,7 +152,7 @@ namespace BLLayer
 
         #region CTOR
 
-        public GameField()
+        private GameField()
         {
             _map = new Dictionary<Coord, Cell>(DefaultSettings.MAP_SIZE); //Cell[DefaultSettings.MAP_HEIGHT, DefaultSettings.MAP_WIDTH];
             _enemys = new Enemy[DefaultSettings.ENEMY_COUNT];
