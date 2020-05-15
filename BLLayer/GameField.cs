@@ -8,6 +8,7 @@ using BLLayer.Interfaces;
 using BLLayer.MapElements;
 using BLLayer.Enums;
 using BLLayer.Delegates;
+using BLLayer.Factory;
 
 namespace BLLayer
 {
@@ -164,6 +165,8 @@ namespace BLLayer
 
         private void InitiolyzeFoodWall()
         {
+            FoodCreator fabric = new FoodCreator();
+
             for (int i = 0; i < DefaultSettings.MAP_HEIGHT; i++)
             {
                 for (int j = 0; j < DefaultSettings.MAP_WIDTH; j++)
@@ -176,7 +179,7 @@ namespace BLLayer
                     }
                     else if(i != 0 && i != DefaultSettings.MAP_HEIGHT - 1 && j != 0 && j != DefaultSettings.MAP_WIDTH - 1 && i % 2 == 1 && j % 5 != 1)
                     {
-                        _map.Add(currentCoord, new Food(currentCoord));
+                        _map.Add(currentCoord, fabric.FactoryMethod(currentCoord));
                         _countFood++;
                     }
                     else
